@@ -3,22 +3,22 @@ using Discord.WebSocket;
 using System;
 using System.Threading.Tasks;
 
-namespace WatchDog.Services
+namespace WatchDog.Events
 {
-    class CommandHandler
+    public sealed class MessageReceived
     {
         private readonly DiscordSocketClient _client;
         private readonly CommandService _commandService;
         private readonly Configuration _config;
         private readonly IServiceProvider _provider;
 
-        public CommandHandler( DiscordSocketClient client, CommandService commandService, Configuration config, IServiceProvider provider)
+        public MessageReceived(DiscordSocketClient client, CommandService commandService, Configuration config, IServiceProvider provider)
         {
             _client = client;
             _commandService = commandService;
             _config = config;
             _provider = provider;
-
+            
             _client.MessageReceived += OnMessageReceivedAsync;
         }
 
@@ -31,7 +31,7 @@ namespace WatchDog.Services
                 return;
             }
 
-            var context = new SocketCommandContext(_client, msg);
+            var context = new Context(_client, msg, _provider);
 
             int argPos = 0;
 
@@ -39,8 +39,21 @@ namespace WatchDog.Services
             {
                 var result = await _commandService.ExecuteAsync(context, argPos, _provider);
 
-                if (!result.IsSuccess)     // If not successful, reply with the error.
-                    await context.Channel.SendMessageAsync(result.ToString());
+                if (!result.IsSuccess)
+                {
+                    var message = string.Empty;
+
+                    switch (result.Error.Value)
+                    {
+                        case CommandError.UnknownCommand:
+                        //return;
+                        default:
+                            message = result.ErrorReason;
+                            break;
+                    }
+
+                    await context.Channel.SendMessageAsync(message);
+                }
             }
         }
     }
