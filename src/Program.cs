@@ -48,6 +48,7 @@ namespace WatchDog
                 .AddSingleton<MessageReceived>()
                 .AddSingleton<ClientLog>()
                 .AddSingleton<CommandLog>()
+                .AddSingleton<ModerationService>()
                 .AddSingleton<CommandExecuted>();
 
             var provider = services.BuildServiceProvider();

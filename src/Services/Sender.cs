@@ -2,6 +2,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using WatchDog.Common;
 using WatchDog.Extensions;
 
 namespace WatchDog.Services

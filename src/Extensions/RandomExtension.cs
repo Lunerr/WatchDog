@@ -6,7 +6,7 @@ namespace WatchDog.Extensions
     {
         public static T ArrayElement<T>(this Random random, T[] array)
         {
-            return array[random.Next(array.Length) - 1];
+            return array[random.Next(array.Length)];
         }
     }
 }

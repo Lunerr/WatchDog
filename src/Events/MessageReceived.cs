@@ -2,6 +2,9 @@
 using Discord.WebSocket;
 using System;
 using System.Threading.Tasks;
+using WatchDog.Common;
+using WatchDog.Services;
+using Discord;
 
 namespace WatchDog.Events
 {
@@ -51,8 +54,8 @@ namespace WatchDog.Events
                             message = result.ErrorReason;
                             break;
                     }
-
-                    await context.Channel.SendMessageAsync(message);
+                    // TODO: proper colour
+                    await context.ReplyAsync(message, null, new Color(_config.ErrorColor));
                 }
             }
         }
