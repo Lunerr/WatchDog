@@ -7,6 +7,7 @@ using System;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using WatchDog.Common;
 using WatchDog.Events;
 using WatchDog.Services;
 using WatchDog.Utility;

@@ -1,4 +1,4 @@
-﻿namespace WatchDog
+﻿namespace WatchDog.Common
 {
     public class Credentials
     {

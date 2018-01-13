@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using WatchDog.Services;
 using Discord;
 
-namespace WatchDog
+namespace WatchDog.Common
 {
     public class Context : SocketCommandContext
     {
